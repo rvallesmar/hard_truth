@@ -10,7 +10,6 @@ load_dotenv()
 
 API_KEY = os.getenv("THENEWSAPI_KEY")
 
-
 def fetch_articles(query, language, total_articles, page_size, topic_label, published_after, published_before=None):
     all_articles = []
     collected = 0
