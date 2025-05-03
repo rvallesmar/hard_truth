@@ -67,7 +67,12 @@ def extract_details(text,nlp_model):
 
     return details
 
-def get_ground_truth(articles:list, nlp_model) -> list:
+# get the ground truth from a given csv file containing all the relevant articles
+# columns in the csv file are: article_id, title, body, source, published_at, url
+def get_ground_truth(articles_path:str, nlp_model) -> list:
+    df_articles = pd.read_csv(articles_path)
+    articles = df_articles['body'].to_list()
+    
     all_details = list()
 
     for i, article_text in enumerate(articles):

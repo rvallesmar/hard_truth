@@ -21,7 +21,7 @@ class HuggingFaceEmbeddings:
         model_name (str, optional): The name of the Hugging Face pre-trained model to use for generating embeddings. 
                                     Default is 'sentence-transformers/all-MiniLM-L6-v2'.
         path (str, optional): The path to the CSV file containing the text data. Default is 'data/file.csv'.
-        save_path (str, optional): The directory path where the embeddings will be saved. Default is 'Models'.
+        save_path (str, optional): The directory path where the embeddings will be saved. Default is 'data'.
         device (str, optional): The device to run the model on ('cpu' or 'cuda'). If None, it will automatically detect 
                                 a GPU if available; otherwise, it defaults to CPU.
 
@@ -48,7 +48,7 @@ class HuggingFaceEmbeddings:
         embedding_instance.get_embedding_df(column='description', directory='output', file='product_embeddings.csv')
     """
     
-    def __init__(self, model_name='sentence-transformers/all-MiniLM-L6-v2', path='data/file.csv', save_path=None, device=None):
+    def __init__(self, model_name='sentence-transformers/all-MiniLM-L6-v2', path='data/file.csv', save_path='data', device=None):
         """
         Initializes the HuggingFaceEmbeddings class with the specified model and paths.
 
