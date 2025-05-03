@@ -54,9 +54,9 @@ def fetch_articles(query, language, total_articles, page_size, topic_label, publ
 
             collected += len(articles)
             page += 1
-            print(f"  → {collected} collected so far")
+            print(f"->{collected} collected so far")
         else:
-            print(f"❌ Error fetching query '{query}':", response.status_code)
+            print(f"Error fetching query '{query}':", response.status_code)
             break
 
     return all_articles
@@ -67,7 +67,7 @@ def extract_full_text(url):
         a = Article(url)
         a.download()
         a.parse()
-        time.sleep(0.5)  # Avoid rate limiting
+        time.sleep(0.5)
         return a.text
     except ArticleException:
         return ''
@@ -75,24 +75,23 @@ def extract_full_text(url):
 
 def save_articles_to_csv(articles, filename):
     if not articles:
-        print("⚠️ No articles were collected.")
+        print("No articles were collected.")
         return
 
     df = pd.DataFrame(articles)
     output_path = os.path.join(os.path.dirname(__file__), '..', 'data', filename)
     df.to_csv(output_path, index=False)
-    print(f"✅ Saved {len(df)} full-text articles to {output_path}")
+    print(f"Saved {len(df)} full-text articles to {output_path}")
 
 
 if __name__ == "__main__":
-    # Customize your input here
     search_query = '2024 Champions League final'
     LANGUAGE = 'en'
     TOTAL_ARTICLES = 50
     PAGE_SIZE = 20
     TOPIC_LABEL = '2024+champions+league+final'
     OUTPUT_FILENAME = '2024-CL.csv'
-    PUBLISHED_AFTER = '2024-06-01'  
+    PUBLISHED_AFTER = '2024-01-06'  
     PUBLISHED_BEFORE = None         
 
     articles = fetch_articles(
