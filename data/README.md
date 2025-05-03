@@ -1,0 +1,1 @@
+this folder will be used to store the news articles data that is downloaded
