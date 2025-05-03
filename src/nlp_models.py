@@ -68,7 +68,7 @@ class HuggingFaceEmbeddings:
         
         # Define device
         if device is None:
-            # Note: If you have a mac, you may want to change 'cupa' to 'mps' to use GPU
+            # Note: If you have a mac, change 'cupa' to 'mps' to use GPU
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'mps')
         else:
             self.device = torch.device(device)
