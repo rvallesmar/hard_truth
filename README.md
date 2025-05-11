@@ -1,4 +1,4 @@
-# 📰 Hard Truth: News Comparison with LLMs
+# Hard Truth: News Comparison with LLMs
 
 ##  Setup Instructions
 

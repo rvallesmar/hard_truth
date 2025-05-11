@@ -15,7 +15,7 @@ def fetch_articles(query, language, total_articles, page_size, topic_label, publ
     collected = 0
     page = 1
 
-    print(f"🔍 Fetching articles for: '{query}'")
+    print(f"Fetching articles for: '{query}'")
 
     while collected < total_articles:
         url = 'https://api.thenewsapi.com/v1/news/all'
@@ -81,25 +81,3 @@ def save_articles_to_csv(articles, filename):
     output_path = os.path.join(os.path.dirname(__file__), '..', 'data', filename)
     df.to_csv(output_path, index=False)
     print(f"Saved {len(df)} full-text articles to {output_path}")
-
-
-# if __name__ == "__main__":
-#     search_query = '2024 Champions League final'
-#     LANGUAGE = 'en'
-#     TOTAL_ARTICLES = 50
-#     PAGE_SIZE = 20
-#     TOPIC_LABEL = '2024+champions+league+final'
-#     OUTPUT_FILENAME = '2024-CL.csv'
-#     PUBLISHED_AFTER = '2024-01-06'  
-#     PUBLISHED_BEFORE = None         
-
-#     articles = fetch_articles(
-#         search_query,
-#         LANGUAGE,
-#         TOTAL_ARTICLES,
-#         PAGE_SIZE,
-#         TOPIC_LABEL,
-#         PUBLISHED_AFTER,
-#         published_before=PUBLISHED_BEFORE
-#     )
-#     save_articles_to_csv(articles, OUTPUT_FILENAME)

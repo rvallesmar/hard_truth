@@ -9,3 +9,12 @@ venv.bak/
 testven/
 src/__pycache__/__init__.cpython-312.pyc
 src/__pycache__/articles.cpython-312.pyc
+outputs/articles_scored_kk.csv
+outputs/embedded_articles.csv
+.gitignore
+outputs/ground_truth_kk.txt
+src/__pycache__/utils.cpython-310.pyc
+src/__pycache__/nlp_models.cpython-310.pyc
+src/__pycache__/articles.cpython-310.pyc
+src/__pycache__/__init__.cpython-310.pyc
+outputs/ground_truth.txt

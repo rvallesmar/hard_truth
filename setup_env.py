@@ -24,6 +24,7 @@ def install_dependencies(venv_dir="venv"):
 
     subprocess.check_call([str(pip_path), "install", "-r", "requirements.txt"])
     subprocess.check_call([str(python_path), "-m", "spacy", "download", "en_core_web_sm"])
+    subprocess.check_call([str(python_path), "-m", "spacy", "download", "en_core_web_md"])
 
 
 def main():

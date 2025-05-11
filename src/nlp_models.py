@@ -90,7 +90,7 @@ class HuggingFaceEmbeddings:
             text (str): The input text for which embeddings will be generated.
 
         Returns:
-            np.ndarray: A numpy array containing the embedding vector for the input text.
+            list: A list containing the embedding vector for the input text.
         """
         ### Tokenize the input text using the Hugging Face tokenizer
         inputs = self.tokenizer(text,return_tensors='pt',truncation=True,padding=True,max_length=512)
@@ -102,8 +102,8 @@ class HuggingFaceEmbeddings:
             # Generate the embeddings using the Hugging Face model from the tokenized input
             outputs = self.model(**inputs)
         
-        # Extract the embeddings from the model output, send to cpu and return the numpy array
-        embeddings = outputs.last_hidden_state.mean(dim=1).squeeze().cpu().numpy().flatten()
+        # Extract the embeddings from the model output, send to cpu and return the list
+        embeddings = outputs.last_hidden_state.mean(dim=1).squeeze().cpu().numpy().tolist()
         
         return embeddings
 
@@ -114,7 +114,6 @@ class HuggingFaceEmbeddings:
         df = pd.read_csv(self.path)
         # Generate embeddings for the specified column using the `get_embedding` method
         # convert the embeddings to a list before saving to the DataFrame
-        # df["embeddings"] = df[column].apply(lambda x: self.get_embedding(x))
         df["embeddings"] = df[column].apply(lambda x: self.get_embedding(x) if isinstance(x, str) else None)
 
 
@@ -123,4 +122,44 @@ class HuggingFaceEmbeddings:
         os.makedirs(directory, exist_ok=True)
         # Save the DataFrame with the embeddings to a new CSV file in the specified directory
         df.to_csv(output_path, index=False)
+
+        return df
+    
+    @staticmethod
+    def get_single_embedding(text, model='sentence-transformers/all-MiniLM-L6-v2', device = None):
+        """
+        Generates embeddings for a given text using the specified huggingface model.
+
+        Args:
+            text (str): The input text for which embeddings will be generated.
+
+        Returns:
+            list: A list containing the embedding vector for the input text.
+        """
+        tokenizer = AutoTokenizer.from_pretrained(model)
+        model = AutoModel.from_pretrained(model)
+
+        # Define device
+        if device is None:
+            if torch.cuda.is_available():
+                device = torch.device("cuda")
+            else:
+                device = torch.device("cpu")
+        else:
+            device = torch.device(device)
+
+        # Move model to the specified device
+        model.to(device)
+
+        # Tokenize the input text
+        inputs = tokenizer(text,return_tensors='pt',truncation=True,padding=True,max_length=512)        
+        # Move the inputs to the device
+        inputs = {key: value.to(device) for key, value in inputs.items()}
+        with torch.no_grad():
+            # Generate the embeddings using the Hugging Face model from the tokenized input
+            outputs = model(**inputs)
+        # Extract the embeddings from the model output, send to cpu and return the list
+        embeddings = outputs.last_hidden_state.mean(dim=1).squeeze().cpu().numpy().tolist()
+        
+        return embeddings
 
