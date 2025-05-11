@@ -45,7 +45,7 @@ def fetch_articles(query, language, total_articles, page_size, topic_label, publ
                 all_articles.append({
                     'article_id': article.get('uuid'),
                     'title': article.get('title', ''),
-                    'body': full_text,
+                    'body': full_text, 
                     'source': article.get('source', ''),
                     'published_at': article.get('published_at', ''),
                     'url': article.get('url', '')
@@ -83,23 +83,23 @@ def save_articles_to_csv(articles, filename):
     print(f"Saved {len(df)} full-text articles to {output_path}")
 
 
-if __name__ == "__main__":
-    search_query = '2024 Champions League final'
-    LANGUAGE = 'en'
-    TOTAL_ARTICLES = 50
-    PAGE_SIZE = 20
-    TOPIC_LABEL = '2024+champions+league+final'
-    OUTPUT_FILENAME = '2024-CL.csv'
-    PUBLISHED_AFTER = '2024-01-06'  
-    PUBLISHED_BEFORE = None         
+# if __name__ == "__main__":
+#     search_query = '2024 Champions League final'
+#     LANGUAGE = 'en'
+#     TOTAL_ARTICLES = 50
+#     PAGE_SIZE = 20
+#     TOPIC_LABEL = '2024+champions+league+final'
+#     OUTPUT_FILENAME = '2024-CL.csv'
+#     PUBLISHED_AFTER = '2024-01-06'  
+#     PUBLISHED_BEFORE = None         
 
-    articles = fetch_articles(
-        search_query,
-        LANGUAGE,
-        TOTAL_ARTICLES,
-        PAGE_SIZE,
-        TOPIC_LABEL,
-        PUBLISHED_AFTER,
-        published_before=PUBLISHED_BEFORE
-    )
-    save_articles_to_csv(articles, OUTPUT_FILENAME)
+#     articles = fetch_articles(
+#         search_query,
+#         LANGUAGE,
+#         TOTAL_ARTICLES,
+#         PAGE_SIZE,
+#         TOPIC_LABEL,
+#         PUBLISHED_AFTER,
+#         published_before=PUBLISHED_BEFORE
+#     )
+#     save_articles_to_csv(articles, OUTPUT_FILENAME)

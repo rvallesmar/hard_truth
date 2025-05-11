@@ -68,11 +68,14 @@ class HuggingFaceEmbeddings:
         
         # Define device
         if device is None:
-            # Note: If you have a mac, change 'cupa' to 'mps' to use GPU
-            self.device = torch.device('cuda' if torch.cuda.is_available() else 'mps')
+            if torch.cuda.is_available():
+                self.device = torch.device("cuda")
+            else:
+                self.device = torch.device("cpu")
         else:
             self.device = torch.device(device)
         print(f"Using device: {self.device}")
+
         
         # Move model to the specified device
         self.model.to(self.device)
@@ -111,7 +114,9 @@ class HuggingFaceEmbeddings:
         df = pd.read_csv(self.path)
         # Generate embeddings for the specified column using the `get_embedding` method
         # convert the embeddings to a list before saving to the DataFrame
-        df["embeddings"] = df[column].apply(lambda x: self.get_embedding(x))
+        # df["embeddings"] = df[column].apply(lambda x: self.get_embedding(x))
+        df["embeddings"] = df[column].apply(lambda x: self.get_embedding(x) if isinstance(x, str) else None)
+
 
         df = df.dropna(subset=['embeddings'])
         
