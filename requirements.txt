@@ -2,8 +2,6 @@ pandas
 numpy
 matplotlib
 scikit-learn
-seaborn
-sentence-transformers
 torch
 transformers
 requests
